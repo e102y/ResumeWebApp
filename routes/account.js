@@ -35,25 +35,23 @@ router.get('/', function(req, res){
 
 router.get('/add', function(req, res){
     // passing all the query parameters (req.query) to the insert function instead of each individually
-    account_dal.getAll(function(err,result) {
-        if (err) {
-            res.send(err);
-        }
-        else {
-            res.render('account/accountAdd', {'account': result});
-        }
-    });
+
+            res.render('account/accountAdd');
+
 });
 
 
 router.get('/insert', function(req, res){
     console.log(req.query);
     // simple validation
-    if(req.query.account_name == null) {
-        res.send('account name must be provided.');
+    if(req.query.account_fname == null) {
+        res.send('a first name must be provided.');
     }
-    else if(req.query.user_account_id == null) {
-        res.send('An account must be selected');
+    else if(req.query.account_lname == null) {
+        res.send('A last name must be provided');
+    }
+    if(req.query.account_email == null) {
+        res.send('an e-mail must be provided.');
     }
     else {
         // passing all the query parameters (req.query) to the insert function instead of each individually

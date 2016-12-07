@@ -22,11 +22,11 @@ exports.getById = function(account_id, callback) {
 };
 
 exports.insert = function(params, callback) {
-    var query = 'INSERT INTO account (account_name, user_account_id) VALUES (?, ?)';
+    var query = 'INSERT INTO account (first_name, last_name, email) VALUES (?, ?, ?)';
 
     // the question marks in the sql query above will be replaced by the values of the
     // the data in queryData
-    var queryData = [params.account_name, params.user_account_id];
+    var queryData = [params.account_fname, params.account_lname, params.account_email];
 
     connection.query(query, queryData, function (err, result) {
         callback(err, result);
