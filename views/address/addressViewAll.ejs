@@ -8,10 +8,10 @@
 
         <br />
         <table border="1">
-            <tr><th>Address ID</th><th>Street Address</th><th>Zip</th></tr>
+            <tr><th>Street Address</th><th>Zip</th></tr>
             <% for(var i=0; result.length > i; i++ ) { %>
             <tr>
-                <td><%= result[i].address_id%></td>
+
                 <td><a href="/address/?address_id=<%= result[i].address_id %>"><%= result[i].street %></a></td>
                 <td><%= result[i].zip %></td>
                 <td><form action="/address/delete/">

@@ -8,10 +8,10 @@
 
         <br />
         <table border="1">
-            <tr><th>Skill ID</th><th>Skill Name</th><th>Description</th></tr>
+            <tr><th>Skill Name</th><th>Description</th></tr>
             <% for(var i=0; result.length > i; i++ ) { %>
             <tr>
-                <td><%= result[i].skill_id%></td>
+
                 <td><a href="/skill/?skill_id=<%= result[i].skill_id %>"><%= result[i].name_ %></a></td>
                 <td><%= result[i].description %></td>
                 <td><form action="/skill/delete/">
