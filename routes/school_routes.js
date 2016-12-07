@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var school_dal = require('../model/school_dal');
-var address_dal = require('../model/address_dal');
+var address_dal = require('../model/address');
 
 
 // View All schools
@@ -70,6 +70,37 @@ router.get('/insert', function(req, res){
     }
 });
 
+router.get('/edit', function(req, res){
+    if(req.query.school_id == null) {
+        res.send('A school id is required');
+    }
+    else {
+        school_dal.edit(req.query.school_id, function(err, result){
+            res.render('school/schoolUpdate', {school: result[0][0], address: result[1]});
+        });
+    }
+
+});
+
+router.get('/edit2', function(req, res){
+    if(req.query.school_id == null) {
+        res.send('A school id is required');
+    }
+    else {
+        school_dal.getById(req.query.school_id, function(err, school){
+            address_dal.getAll(function(err, address) {
+                res.render('school/schoolUpdate', {school: school[0], address: address});
+            });
+        });
+    }
+
+});
+
+router.get('/update', function(req, res){
+    school_dal.update(req.query, function(err, result){
+        res.redirect(302, '/school/all');
+    });
+});
 // Delete a school for the given school_id
 router.get('/delete', function(req, res){
     if(req.query.school_id == null) {

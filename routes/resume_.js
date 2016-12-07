@@ -16,6 +16,24 @@ router.get('/all', function(req, res) {
 
 });
 
+// View the resume for the given id
+router.get('/', function(req, res){
+    if(req.query.resume_id == null) {
+        res.send('resume_id is null');
+    }
+    else {
+        resume_dal.getById(req.query.resume_id, function(err,result) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.render('resume/resumeViewById', {'result': result});
+            }
+        });
+    }
+});
+
+
 
 router.get('/add', function(req, res){
     // passing all the query parameters (req.query) to the insert function instead of each individually
@@ -24,7 +42,7 @@ router.get('/add', function(req, res){
             res.send(err);
         }
         else {
-            res.render('resume/resumeAdd', {'account': result});
+            res.render('resume/resumeAdd');
         }
     });
 });
@@ -36,7 +54,7 @@ router.get('/insert', function(req, res){
     if(req.query.resume_name == null) {
         res.send('Resume name must be provided.');
     }
-    else if(req.query.account_id == null) {
+    else if(req.query.user_account_id == null) {
         res.send('An account must be selected');
     }
     else {
@@ -53,20 +71,25 @@ router.get('/insert', function(req, res){
     }
 });
 
-// View the resume for the given id
-router.get('/', function(req, res){
+
+// Delete a resume for the given resume_id
+router.get('/delete', function(req, res){
     if(req.query.resume_id == null) {
         res.send('resume_id is null');
     }
     else {
-        resume_dal.getById(req.query.resume_id, function(err,result) {
-           if (err) {
-               res.send(err);
-           }
-           else {
-               res.render('resume/resumeViewById', {'result': result});
-           }
-        });
+        resume_dal.delete(
+            req.query.resume_id,
+            function(err, result){
+            if(err) {
+                res.send(err);
+            }
+            else {
+                //poor practice, but we will handle it differently once we start using Ajax
+                res.redirect(302, '/resume/all');
+            }
+        }
+        );
     }
 });
 

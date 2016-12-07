@@ -8,11 +8,16 @@
 
         <br />
         <table border="1">
-            <tr><th>Resume Name</th><th>User Name</th></tr>
+            <tr><th>Resume Name</th><th>User Name</th><th>Action</th></tr>
             <% for(var i=0; result.length > i; i++ ) { %>
             <tr>
                 <td><a href="/resume/?resume_id=<%= result[i].resume_id %>"><%= result[i].resume_name %></a></td>
                 <td><%= result[i].first_name %> <%= result[i].last_name %></td>
+                <td><form action="/resume/delete/">
+                    <input type="hidden" name="resume_id" id="resume_id" value="<%= result[i].resume_id %>" />
+                    <input type="submit" value="Delete"/>
+                </form>
+                </td>
             </tr>
             <% } %>
         </table>

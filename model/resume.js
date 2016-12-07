@@ -26,10 +26,24 @@ exports.insert = function(params, callback) {
 
     // the question marks in the sql query above will be replaced by the values of the
     // the data in queryData
-    var queryData = [params.resume_name, params.account_id];
+    var queryData = [params.resume_name, params.user_account_id];
 
-    connection.query(query, queryData, function(err, result) {
+    connection.query(query, queryData, function (err, result) {
         callback(err, result);
     });
+
+}
+
+
+    exports.delete = function(resume_id, callback) {
+        var query = 'DELETE FROM resume_ WHERE resume_id = ?';
+        var queryData = [resume_id];
+
+        connection.query(query, queryData, function(err, result) {
+            callback(err, result);
+        });
+
+
+    
 
 }
