@@ -47,7 +47,7 @@ router.get('/add', function(req, res){
     });
 });
 
-// View the school for the given id
+// insert a school record
 router.get('/insert', function(req, res){
     // simple validation
     if(req.query.school_name == null) {
