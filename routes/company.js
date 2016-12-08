@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var company_dal = require('../model/company');
+var address_dal = require('../model/address');
 
 
-// View All companies
+// View All companys
 router.get('/all', function(req, res) {
     company_dal.getAll(function(err, result){
         if(err) {
@@ -23,21 +24,27 @@ router.get('/', function(req, res){
     }
     else {
         company_dal.getById(req.query.company_id, function(err,result) {
-           if (err) {
-               res.send(err);
-           }
-           else {
-               res.render('company/companyViewById', {'result': result});
-           }
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.render('company/companyViewById', {'result': result});
+            }
         });
     }
 });
 
 // Return the add a new company form
 router.get('/add', function(req, res){
-
-            res.render('company/companyAdd');
-
+    // passing all the query parameters (req.query) to the insert function instead of each individually
+    address_dal.getAll(function(err,result) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.render('company/companyAdd', {'address': result});
+        }
+    });
 });
 
 // View the company for the given id
@@ -45,6 +52,9 @@ router.get('/insert', function(req, res){
     // simple validation
     if(req.query.company_name == null) {
         res.send('Company Name must be provided.');
+    }
+    else if(req.query.address_id == null) {
+        res.send('At least one address must be selected');
     }
     else {
         // passing all the query parameters (req.query) to the insert function instead of each individually

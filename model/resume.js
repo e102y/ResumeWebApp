@@ -22,11 +22,11 @@ exports.getById = function(resume_id, callback) {
 };
 
 exports.insert = function(params, callback) {
-    var query = 'INSERT INTO resume_ (resume_name, user_account_id) VALUES (?, ?)';
+    var query = 'CALL resume_setinfo (?, ?, ?, ?, ?, ?, ?);';
 
     // the question marks in the sql query above will be replaced by the values of the
     // the data in queryData
-    var queryData = [params.resume_name, params.user_account_id];
+    var queryData = [params.user_account_id,params.resume_name,params.skill_id,params.date_shared_year + '-' + params.date_shared_month + '-' + params.date_shared_day, params.was_hired,params.company_id, params.school_id];
 
     connection.query(query, queryData, function (err, result) {
         callback(err, result);

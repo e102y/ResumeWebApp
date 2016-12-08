@@ -12,6 +12,14 @@ exports.getAll = function(callback) {
     });
 };
 
+exports.getMore = function(callback) {
+    var query = 'SELECT * FROM account LEFT JOIN months;';
+
+    connection.query(query, function(err, result) {
+        callback(err, result);
+    });
+};
+
 exports.getById = function(account_id, callback) {
     var query = 'SELECT * FROM account WHERE account_id = ?';
     var queryData = [account_id];

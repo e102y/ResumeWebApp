@@ -4,12 +4,7 @@ var db  = require('./db_connection.js');
 /* DATABASE CONFIGURATION */
 var connection = mysql.createConnection(db.config);
 
-/*
- create or replace view school_view as
- select s.*, a.street, a.zipcode from school s
- join address a on a.address_id = s.address_id;
 
- */
 
 exports.getAll = function(callback) {
     var query = 'SELECT * FROM school_view;';
@@ -59,6 +54,8 @@ exports.update = function(params, callback) {
         callback(err, result);
     });
 };
+
+
 
 exports.edit = function(school_id, callback) {
     var query = 'CALL school_getinfo(?)';

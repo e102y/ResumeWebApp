@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var resume_dal = require('../model/resume');
 var account_dal = require('../model/account');
+var skill_dal = require('../model/skill');
+var company_dal = require('../model/company');
+var school_dal = require('../model/school_dal');
 
 // View All resumes
 router.get('/all', function(req, res) {
@@ -36,17 +39,42 @@ router.get('/', function(req, res){
 
 
 router.get('/add', function(req, res){
-    // passing all the query parameters (req.query) to the insert function instead of each individually
-    account_dal.getAll(function(err,result) {
-        if (err) {
-            res.send(err);
+        // passing all the query parameters (req.query) to the insert function instead of each individually
+    school_dal.getAll(function (err4, result4){
+        if (err4) {
+            res.send(err4);
         }
         else {
-            res.render('resume/resumeAdd');
+            company_dal.getAll(function (err3, result3) {
+                if (err3) {
+                    res.send(err3);
+                }
+                else {
+                    skill_dal.getAll(function (err2, result2) {
+                        if (err2) {
+                            res.send(err2);
+                        }
+                        else {
+                            account_dal.getAll(function (err, result) {
+                                if (err) {
+                                    res.send(err);
+                                }
+                                else {
+                                    res.render('resume/resumeAdd', {
+                                        'account': result,
+                                        'skill': result2,
+                                        'company': result3,
+                                        'school': result4
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         }
-    });
 });
-
+});
 
 router.get('/insert', function(req, res){
     console.log(req.query);
@@ -56,6 +84,27 @@ router.get('/insert', function(req, res){
     }
     else if(req.query.user_account_id == null) {
         res.send('An account must be selected');
+    }
+    else if(req.query.date_shared_year == null) {
+        res.send('Resume year must be provided.');
+    }
+    else if(req.query.date_shared_month == null) {
+        res.send('Resume month must be provided.');
+    }
+    else if(req.query.date_shared_day == null) {
+        res.send('Resume day must be provided.');
+    }
+    else if(req.query.skill_id == null) {
+        res.send('skill must be provided.');
+    }
+    else if(req.query.company_id == null) {
+        res.send('company must be provided.');
+    }
+    else if(req.query.school_id == null) {
+        res.send('school must be provided.');
+    }
+    else if(req.query.was_hired == null) {
+        res.send('hiring status must be provided.');
     }
     else {
         // passing all the query parameters (req.query) to the insert function instead of each individually
