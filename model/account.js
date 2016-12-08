@@ -51,4 +51,24 @@ exports.delete = function(account_id, callback) {
         callback(err, result);
     });
 
-}
+};
+
+exports.update = function(params, callback) {
+    var query = 'UPDATE account SET first_name = ?, last_name = ?, email = ? WHERE account_id = ?';
+    var queryData = [params.account_first, params.account_last, params.account_email, params.account_id];
+
+    connection.query(query, queryData, function(err, result) {
+        callback(err, result);
+    });
+};
+
+
+
+exports.edit = function(account_id, callback) {
+    var query = 'CALL account_getinfo(?)';
+    var queryData = [account_id];
+
+    connection.query(query, queryData, function(err, result) {
+        callback(err, result);
+    });
+};

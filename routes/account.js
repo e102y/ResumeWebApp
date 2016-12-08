@@ -88,4 +88,23 @@ router.get('/delete', function(req, res){
         );
     }
 });
+
+router.get('/edit', function(req, res){
+    if(req.query.account_id == null) {
+        res.send('An account id is required');
+    }
+    else {
+        account_dal.edit(req.query.account_id, function(err, result){
+            res.render('account/accountUpdate', {account: result[0][0], address: result[1]});
+        });
+    }
+
+});
+
+router.get('/update', function(req, res){
+    account_dal.update(req.query, function(err, result){
+        res.redirect(302, '/account/all');
+    });
+});
+
 module.exports = router;
