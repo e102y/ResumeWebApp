@@ -102,9 +102,20 @@ router.get('/edit', function(req, res){
 });
 
 router.get('/update', function(req, res){
-    account_dal.update(req.query, function(err, result){
-        res.redirect(302, '/account/all');
-    });
+    if(req.query.account_fname == null) {
+        res.send('A First Name is required');
+    }
+    if(req.query.account_lname == null) {
+        res.send('A Last name is required');
+    }
+    if(req.query.account_email == null) {
+        res.send('An email is required');
+    }
+    else {
+        account_dal.update(req.query, function (err, result) {
+            res.redirect(302, '/account/all');
+        });
+    }
 });
 
 module.exports = router;

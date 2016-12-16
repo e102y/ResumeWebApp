@@ -13,7 +13,7 @@ exports.getAll = function(callback) {
 };
 
 exports.getById = function(resume_id, callback) {
-    var query = 'SELECT * FROM resume_ WHERE resume_id = ?';
+    var query = 'SELECT * FROM resumeGet WHERE resume_id = ?';
     var queryData = [resume_id];
 
     connection.query(query, queryData, function(err, result) {
@@ -22,28 +22,43 @@ exports.getById = function(resume_id, callback) {
 };
 
 exports.insert = function(params, callback) {
-    var query = 'CALL resume_setinfo (?, ?, ?, ?, ?, ?, ?);';
+    var query = 'CALL resume_New (?, ?, ?, ?, ?, ?, ?);';
 
     // the question marks in the sql query above will be replaced by the values of the
     // the data in queryData
-    var queryData = [params.user_account_id,params.resume_name,params.skill_id,params.date_shared_year + '-' + params.date_shared_month + '-' + params.date_shared_day, params.was_hired,params.company_id, params.school_id];
+    var queryData = [params.user_account_id,params.resume_name,params.skill_id,params.date_shared_year + '-' + params.date_shared_month + '-' + params.date_shared_day, params.company_id, params.school_id, params.was_hired];
 
     connection.query(query, queryData, function (err, result) {
         callback(err, result);
     });
 
-}
+};
 
 
     exports.delete = function(resume_id, callback) {
         var query = 'DELETE FROM resume_ WHERE resume_id = ?';
         var queryData = [resume_id];
 
-        connection.query(query, queryData, function(err, result) {
+        connection.query(query, queryData, function (err, result) {
             callback(err, result);
         });
+    };
 
+
+
+        exports.edit = function(params, callback) {
+            var query = 'CALL resume_setinfo (?, ?, ?, ?, ?, ?, ?, ?);';
+
+            // the question marks in the sql query above will be replaced by the values of the
+            // the data in queryData
+            var queryData = [params.user_account_id,params.resume_name,params.skill_id,params.date_shared_year + '-' + params.date_shared_month + '-' + params.date_shared_day,params.company_id, params.school_id, params.resume_id, params.was_hired];
+
+
+            connection.query(query, queryData, function(err, result) {
+                callback(err, result);
+            });
+        };
 
     
 
-}
+

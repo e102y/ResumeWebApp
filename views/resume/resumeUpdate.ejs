@@ -1,0 +1,94 @@
+<%- include("../includes/header.ejs", {title: "Update " + resume.resume_name}); %>
+
+<h1>Update <%= resume.resume_name%></h1>
+<form action="/resume/update" method="get">
+    Resume Name: <input id="resume_name" name="resume_name" value="<%= resume[0].resume_name %>" type="text" />
+    <input type="hidden" name="user_account_id" id="user_account_id" value="<%= resume[0].user_account_id %>" />
+    <input type="hidden" name="resume_id" id="resume_id" value="<%= resume[0].resume_id %>" />
+    <br/>
+    <br/>
+    Date Shared:
+    <% var month = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; %>
+    <br/>
+    Day:
+    <select id="date_shared_day" name="date_shared_day">
+        <% for(var i=1; 32 > i; i++ ) { %>
+        <option value=<%=i%>><%=i%></option>
+        <% } %>
+    </select>
+    Month:
+    <select id="date_shared_month" name="date_shared_month">
+        <% for(var i=1; 13 > i; i++ ) { %>
+        <option value=<%= i %>><%= month[i-1] %></option>
+        <% } %>
+    </select>
+    Year:
+    <select id="date_shared_year" name="date_shared_year">
+        <% for(var i=2025; 1914 < i; i-- ) { %>
+        <option value=<%=i%>><%=i%></option>
+        <% } %>
+    </select>
+    <br/>
+    <br/>
+    Skill:
+    <br/>
+
+    <select id="skill_id" name="skill_id" multiple="multiple">
+        <% for(var i=0; skill.length > i; i++ ) { %>
+        <option value="<%= skill[i].skill_id %>"><%= skill[i].name_ %></option>
+        <% } %>
+    </select>
+
+    <!-- Initialize the multiselect plugin: -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#address_id').multiselect();
+        });
+    </script>
+    <br/>
+    <br/>
+    Company:
+    <br/>
+    <select id="company_id" name="company_id" multiple="multiple">
+        <% for(var i=0; company.length > i; i++ ) { %>
+        <option value="<%= company[i].company_id %>"><%= company[i].company_name %></option>
+        <% } %>
+    </select>
+
+    <!-- Initialize the multiselect plugin: -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#address_id').multiselect();
+        });
+    </script>
+    <br/>
+    <br/>
+    Schools:
+    <br/>
+    <select id="school_id" name="school_id" multiple="multiple">
+        <% for(var i=0; school.length > i; i++ ) { %>
+        <option value="<%= school[i].school_id %>"><%= school[i].school_name %></option>
+        <% } %>
+    </select>
+
+    <!-- Initialize the multiselect plugin: -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#address_id').multiselect();
+        });
+    </script>
+    <br/>
+    <br/>
+    Were You Hired?
+    <br/>
+    <select id="was_hired" name="was_hired">
+        <option value="1">Yes</option>
+        <option value="0">No</option>
+    </select>
+    <br/>
+    <br/>
+    <input type="submit" />
+
+</form>
+
+<%- include("../includes/footer.ejs"); %>
